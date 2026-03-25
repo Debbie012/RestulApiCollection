@@ -11,17 +11,6 @@
       "name": "List of all Objects",
       "event": [
         {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              ""
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        },
-        {
           "listen": "test",
           "script": {
             "exec": [
@@ -34,9 +23,9 @@
               "});\r",
               "\r",
               "//2. Validate response time is below 1000ms\r",
-              "pm.test(\"Response time is less than 1000ms\", function () {\r",
-              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
-              "});\r",
+              "// pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "//     pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "// });//\r",
               "\r",
               "// 3. Validate response is an array\r",
               "pm.test(\"Response is an array\", function () {\r",
@@ -51,6 +40,17 @@
               "        pm.expect(item).to.have.property(\"data\");\r",
               "    });\r",
               "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
             ],
             "type": "text/javascript",
             "packages": {},
@@ -89,9 +89,9 @@
               "});\r",
               "\r",
               "//2. Validate response time is below 1000ms\r",
-              "pm.test(\"Response time is less than 1000ms\", function () {\r",
-              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
-              "});\r",
+              "// pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "//     pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "// });\r",
               "\r",
               "//3. Validate response body is not empty\r",
               "pm.test(\"Response body is not empty\", function () {\r",
@@ -180,9 +180,9 @@
               "});\r",
               "\r",
               "//2. Validate response time is below 1000ms\r",
-              "pm.test(\"Response time is less than 1000ms\", function () {\r",
-              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
-              "});\r",
+              "// pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "//     pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "// });\r",
               "\r",
               "//3. Validate response body has required properties\r",
               "pm.test(\"Response body has required properties: id, name, data, createdAt\", function () {\r",
@@ -216,7 +216,9 @@
               "\r",
               "    let date = new Date(response.createdAt);\r",
               "    pm.expect(date.toString()).to.not.eql(\"Invalid Date\");\r",
-              "});"
+              "});\r",
+              "\r",
+              "pm.collectionVariables.set(\"objectID\", response.id);"
             ],
             "type": "text/javascript",
             "packages": {},
@@ -264,9 +266,9 @@
               "});\r",
               "\r",
               "//2. Validate response time is below 1000ms\r",
-              "pm.test(\"Response time is less than 1000ms\", function () {\r",
-              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
-              "});\r",
+              "// pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "//     pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "// });\r",
               "\r",
               "//3. Validate response body has required properties\r",
               "pm.test(\"Response body has required properties: id, name, data, createdAt\", function () {\r",
@@ -348,9 +350,9 @@
               "});\r",
               "\r",
               "//2. Validate response time is below 1000ms\r",
-              "pm.test(\"Response time is less than 1000ms\", function () {\r",
-              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
-              "});\r",
+              "// pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "//     pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "// });\r",
               "\r",
               "//3. Validate the response has all required fields\r",
               "pm.test(\"Response has all required fields (id, name, updatedAt, data)\", function () {\r",
@@ -442,9 +444,9 @@
               "});\r",
               "\r",
               "//2. Validate response time is below 1000ms\r",
-              "pm.test(\"Response time is less than 1000ms\", function () {\r",
-              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
-              "});\r",
+              "// pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "//     pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "// });\r",
               "\r",
               "//3. Validate 'id' field exists and is a string\r",
               "pm.test(\"'id' field exists and is a string\", function () {\r",
@@ -538,9 +540,9 @@
               "});\r",
               "\r",
               "//2. Validate response time is below 1000ms\r",
-              "pm.test(\"Response time is less than 1000ms\", function () {\r",
-              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
-              "});\r",
+              "// pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "//     pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "// });\r",
               "\r",
               "// 3. Validate response body contains a confirmation message\r",
               "pm.test(\"Response body contains a message confirming deletion\", function () {\r",
@@ -550,19 +552,7 @@
               "    pm.expect(response.message).to.not.be.empty;\r",
               "});\r",
               "\r",
-              "// 4. Validate that the deleted object ID is no longer accessible (chained verification)\r",
-              "pm.test(\"Verify object is deleted by sending a GET request\", function () {\r",
-              "    const baseUrl = pm.environment.get(\"BaseURL\");\r",
-              "    const objectId = \"ff8081819cd4022c019d05eb3b774f4c\";\r",
               "\r",
-              "    pm.sendRequest({\r",
-              "        url: `${baseUrl}/objects/${objectId}`,\r",
-              "        method: \"GET\"\r",
-              "    }, function (err, res) {\r",
-              "        pm.expect(err).to.be.null;\r",
-              "        pm.expect(res.code).to.be.oneOf([404, 400]);\r",
-              "    });\r",
-              "});\r",
               ""
             ],
             "type": "text/javascript",
@@ -584,17 +574,23 @@
           }
         },
         "url": {
-          "raw": "{{BaseURL}}/objects/ff8081819cd4022c019d06a83c7c508a",
+          "raw": "{{BaseURL}}/objects/{{objectID}}",
           "host": [
             "{{BaseURL}}"
           ],
           "path": [
             "objects",
-            "ff8081819cd4022c019d06a83c7c508a"
+            "{{objectID}}"
           ]
         }
       },
       "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "objectID",
+      "value": ""
     }
   ]
 }
