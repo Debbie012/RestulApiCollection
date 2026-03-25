@@ -1,0 +1,600 @@
+{
+  "info": {
+    "_postman_id": "31d54576-d941-4192-be2a-f1f6fcf92b00",
+    "name": "MyRestulApiCollection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33451219",
+    "_collection_link": "https://go.postman.co/collection/33451219-31d54576-d941-4192-be2a-f1f6fcf92b00?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "List of all Objects",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "let response = pm.response.json();\r",
+              "\r",
+              "//1. Validate Status Code is 200\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "//2. Validate response time is below 1000ms\r",
+              "pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "// 3. Validate response is an array\r",
+              "pm.test(\"Response is an array\", function () {\r",
+              "    pm.expect(response).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "// 4. Validate all items have required fields\r",
+              "pm.test(\"All items have required fields\", function () {\r",
+              "    response.forEach(item => {\r",
+              "        pm.expect(item).to.have.property(\"id\");\r",
+              "        pm.expect(item).to.have.property(\"name\");\r",
+              "        pm.expect(item).to.have.property(\"data\");\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseURL}}/objects",
+          "host": [
+            "{{BaseURL}}"
+          ],
+          "path": [
+            "objects"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Single Object",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "let response = pm.response.json();\r",
+              "\r",
+              "//1. Validate Status Code is 200\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "//2. Validate response time is below 1000ms\r",
+              "pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "//3. Validate response body is not empty\r",
+              "pm.test(\"Response body is not empty\", function () {\r",
+              "    pm.expect(response).to.not.be.empty;\r",
+              "    pm.expect(Object.keys(response).length).to.be.greaterThan(0);\r",
+              "});\r",
+              "\r",
+              "//4. Validate \"id\" field exists and is a string\r",
+              "pm.test(\"'id' field exists and is a string\", function () {\r",
+              "    pm.expect(response).to.have.property(\"id\");\r",
+              "    pm.expect(response.id).to.be.a(\"string\");\r",
+              "});\r",
+              "\r",
+              "//5. Validate \"name\" field exists and is a string\r",
+              "pm.test(\"'name' field exists and is a string\", function () {\r",
+              "    pm.expect(response).to.have.property(\"name\");\r",
+              "    pm.expect(response.name).to.be.a(\"string\");\r",
+              "});\r",
+              "\r",
+              "//6. Validate \"data\" field exists and is an object\r",
+              "pm.test(\"'data' field exists and is an object\", function () {\r",
+              "    pm.expect(response).to.have.property(\"data\");\r",
+              "    pm.expect(response.data).to.be.an(\"object\");\r",
+              "});\r",
+              "\r",
+              "//7. Validate \"data.year\" exists and is a number\r",
+              "pm.test(\"'data.year' exists and is a number\", function () {\r",
+              "    pm.expect(response.data).to.have.property(\"year\");\r",
+              "    pm.expect(response.data.year).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "//8. Validate \"data.price\" exists and is a number\r",
+              "pm.test(\"'data.price' exists and is a number\", function () {\r",
+              "    pm.expect(response.data).to.have.property(\"price\");\r",
+              "    pm.expect(response.data.price).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "//9. Validate \"data.CPU model\" exists and is a string\r",
+              "pm.test(\"'data.CPU model' exists and is a string\", function () {\r",
+              "    pm.expect(response.data).to.have.property(\"CPU model\");\r",
+              "    pm.expect(response.data[\"CPU model\"]).to.be.a(\"string\");\r",
+              "});\r",
+              "\r",
+              "//10. Validate \"data.Hard disk size\" exists and is a string\r",
+              "pm.test(\"'data.Hard disk size' exists and is a string\", function () {\r",
+              "    pm.expect(response.data).to.have.property(\"Hard disk size\");\r",
+              "    pm.expect(response.data[\"Hard disk size\"]).to.be.a(\"string\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseURL}}/objects/7",
+          "host": [
+            "{{BaseURL}}"
+          ],
+          "path": [
+            "objects",
+            "7"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add a New Object",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "let response = pm.response.json();\r",
+              "\r",
+              "//1. Validate Status Code is 200\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "//2. Validate response time is below 1000ms\r",
+              "pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "//3. Validate response body has required properties\r",
+              "pm.test(\"Response body has required properties: id, name, data, createdAt\", function () {\r",
+              "    pm.expect(response).to.have.property(\"id\");\r",
+              "    pm.expect(response).to.have.property(\"name\");\r",
+              "    pm.expect(response).to.have.property(\"data\");\r",
+              "    pm.expect(response).to.have.property(\"createdAt\");\r",
+              "});\r",
+              "\r",
+              "//4. Validate that the \"name\" field matches the request body name\r",
+              "pm.test(\"Response name matches request body name\", function () {\r",
+              "    pm.expect(response.name).to.eql(\"Apple MacBook Pro 16\");\r",
+              "});\r",
+              "\r",
+              "//5. Validate that the \"data\" object contains matching values\r",
+              "pm.test(\"Response data matches sent values\", function () {\r",
+              "    pm.expect(response.data.year).to.eql(2019);\r",
+              "    pm.expect(response.data.price).to.eql(1849.99);\r",
+              "    pm.expect(response.data[\"CPU model\"]).to.eql(\"Intel Core i9\");\r",
+              "    pm.expect(response.data[\"Hard disk size\"]).to.eql(\"1 TB\");\r",
+              "});\r",
+              "\r",
+              "//6. Validate that \"id\" is a non-empty string\r",
+              "pm.test(\"id is a non-empty string\", function () {\r",
+              "    pm.expect(response.id).to.be.a(\"string\").and.not.empty;\r",
+              "});\r",
+              "\r",
+              "//7. Validate that \"createdAt\" is a valid date/time string (non-empty string)\r",
+              "pm.test(\"createdAt is a valid timestamp\", function () {\r",
+              "    pm.expect(response.createdAt).to.be.a(\"number\");\r",
+              "\r",
+              "    let date = new Date(response.createdAt);\r",
+              "    pm.expect(date.toString()).to.not.eql(\"Invalid Date\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Apple MacBook Pro 16\",\r\n  \"data\": {\r\n    \"year\": 2019,\r\n    \"price\": 1849.99,\r\n    \"CPU model\": \"Intel Core i9\",\r\n    \"Hard disk size\": \"1 TB\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/objects",
+          "host": [
+            "{{BaseURL}}"
+          ],
+          "path": [
+            "objects"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Another New Object",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "let response = pm.response.json();\r",
+              "\r",
+              "//1. Validate Status Code is 200\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "//2. Validate response time is below 1000ms\r",
+              "pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "//3. Validate response body has required properties\r",
+              "pm.test(\"Response body has required properties: id, name, data, createdAt\", function () {\r",
+              "    pm.expect(response).to.have.property(\"id\");\r",
+              "    pm.expect(response).to.have.property(\"name\");\r",
+              "    pm.expect(response).to.have.property(\"data\");\r",
+              "    pm.expect(response).to.have.property(\"createdAt\");\r",
+              "});\r",
+              "\r",
+              "//4. Validate that the \"name\" field matches the request body name\r",
+              "pm.test(\"Response name matches request body name\", function () {\r",
+              "    pm.expect(response.name).to.eql(\"Apple MacBook Pro 17\");\r",
+              "});\r",
+              "\r",
+              "//5. Validate that the \"data\" object contains matching values\r",
+              "pm.test(\"Response data matches sent values\", function () {\r",
+              "    pm.expect(response.data.year).to.eql(2017);\r",
+              "    pm.expect(response.data.price).to.eql(1849.0);\r",
+              "    pm.expect(response.data[\"CPU model\"]).to.eql(\"Intel Core i9\");\r",
+              "    pm.expect(response.data[\"Hard disk size\"]).to.eql(\"1 TB\");\r",
+              "});\r",
+              "\r",
+              "//6. Validate that \"id\" is a non-empty string\r",
+              "pm.test(\"id is a non-empty string\", function () {\r",
+              "    pm.expect(response.id).to.be.a(\"string\").and.not.empty;\r",
+              "});\r",
+              "\r",
+              "//7. Validate that \"createdAt\" is a valid date/time string (non-empty string)\r",
+              "pm.test(\"createdAt is a valid timestamp\", function () {\r",
+              "    pm.expect(response.createdAt).to.be.a(\"number\");\r",
+              "\r",
+              "    let date = new Date(response.createdAt);\r",
+              "    pm.expect(date.toString()).to.not.eql(\"Invalid Date\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Apple MacBook Pro 17\",\r\n  \"data\": {\r\n    \"year\": 2017,\r\n    \"price\": 1849.00,\r\n    \"CPU model\": \"Intel Core i9\",\r\n    \"Hard disk size\": \"1 TB\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/objects",
+          "host": [
+            "{{BaseURL}}"
+          ],
+          "path": [
+            "objects"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update an Object",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "let response = pm.response.json();\r",
+              "\r",
+              "//1. Validate Status Code is 200\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "//2. Validate response time is below 1000ms\r",
+              "pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "//3. Validate the response has all required fields\r",
+              "pm.test(\"Response has all required fields (id, name, updatedAt, data)\", function () {\r",
+              "    pm.expect(response).to.have.property(\"id\");\r",
+              "    pm.expect(response).to.have.property(\"name\");\r",
+              "    pm.expect(response).to.have.property(\"updatedAt\");\r",
+              "    pm.expect(response).to.have.property(\"data\");\r",
+              "});\r",
+              "\r",
+              "//4. Validate the \"id\" field is a non-empty string\r",
+              "pm.test(\"The 'id' field is a non-empty string\", function () {\r",
+              "    pm.expect(response.id).to.be.a(\"string\").and.not.empty;\r",
+              "});\r",
+              "\r",
+              "//5. Validate the \"name\" field matches the request body name\r",
+              "pm.test(\"The 'name' field matches the request body name\", function () {\r",
+              "    pm.expect(response.name).to.eql(\"Apple MacBook Pro 16\");\r",
+              "});\r",
+              "\r",
+              "//6. Validate the \"updatedAt\" field is a number (timestamp)\r",
+              "pm.test(\"The 'updatedAt' field is a number\", function () {\r",
+              "    pm.expect(response.updatedAt).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "//7. Validate the \"data\" object contains expected keys\r",
+              "pm.test(\"The 'data' object contains expected keys\", function () {\r",
+              "    pm.expect(response.data).to.have.property(\"year\");\r",
+              "    pm.expect(response.data).to.have.property(\"price\");\r",
+              "    pm.expect(response.data).to.have.property(\"CPU model\");\r",
+              "    pm.expect(response.data).to.have.property(\"Hard disk size\");\r",
+              "    pm.expect(response.data).to.have.property(\"color\");\r",
+              "});\r",
+              "\r",
+              "//8. Validate \"data.year\" is a number\r",
+              "pm.test(\"The 'data.year' field is a number\", function () {\r",
+              "    pm.expect(response.data.year).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "//9. Validate \"data.price\" is a number\r",
+              "pm.test(\"The 'data.price' field is a number\", function () {\r",
+              "    pm.expect(response.data.price).to.be.a(\"number\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Apple MacBook Pro 16\",\r\n  \"data\": {\r\n    \"year\": 2019,\r\n    \"price\": 2049.99,\r\n    \"CPU model\": \"Intel Core i9\",\r\n    \"Hard disk size\": \"1 TB\",\r\n    \"color\": \"silver\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/objects/ff8081819cd4022c019d05fc94744f70",
+          "host": [
+            "{{BaseURL}}"
+          ],
+          "path": [
+            "objects",
+            "ff8081819cd4022c019d05fc94744f70"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Partially Update an Object",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "let response = pm.response.json();\r",
+              "\r",
+              "//1. Validate Status Code is 200\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "//2. Validate response time is below 1000ms\r",
+              "pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "//3. Validate 'id' field exists and is a string\r",
+              "pm.test(\"'id' field exists and is a string\", function () {\r",
+              "    pm.expect(response).to.have.property(\"id\");\r",
+              "    pm.expect(response.id).to.be.a(\"string\");\r",
+              "});\r",
+              "\r",
+              "//4. Validate 'name' field is updated correctly\r",
+              "pm.test(\"'name' field reflects the updated value\", function () {\r",
+              "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "    pm.expect(response.name).to.eql(requestBody.name);\r",
+              "});\r",
+              "\r",
+              "//5. Validate 'updatedAt' field exists and is a number (timestamp)\r",
+              "pm.test(\"'updatedAt' field exists and is a number\", function () {\r",
+              "    pm.expect(response).to.have.property(\"updatedAt\");\r",
+              "    pm.expect(response.updatedAt).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "//6. Validate 'data' object exists and contains expected keys\r",
+              "pm.test(\"'data' object exists with expected properties\", function () {\r",
+              "    pm.expect(response).to.have.property(\"data\");\r",
+              "    pm.expect(response.data).to.be.an(\"object\");\r",
+              "    pm.expect(response.data).to.have.property(\"year\");\r",
+              "    pm.expect(response.data).to.have.property(\"price\");\r",
+              "    pm.expect(response.data).to.have.property(\"CPU model\");\r",
+              "    pm.expect(response.data).to.have.property(\"Hard disk size\");\r",
+              "    pm.expect(response.data).to.have.property(\"color\");\r",
+              "});\r",
+              "\r",
+              "//7. Validate data types within the 'data' object\r",
+              "pm.test(\"'data' properties have correct types\", function () {\r",
+              "    pm.expect(response.data.year).to.be.a(\"number\");\r",
+              "    pm.expect(response.data.price).to.be.a(\"number\");\r",
+              "    pm.expect(response.data[\"CPU model\"]).to.be.a(\"string\");\r",
+              "    pm.expect(response.data[\"Hard disk size\"]).to.be.a(\"string\");\r",
+              "    pm.expect(response.data.color).to.be.a(\"string\");\r",
+              "});\r",
+              "\r",
+              "//8. Validate that only the patched field changed (partial update check)\r",
+              "pm.test(\"Partial update did not remove existing 'data' fields\", function () {\r",
+              "    pm.expect(Object.keys(response.data).length).to.be.at.least(1);\r",
+              "    pm.expect(response.data).to.have.property(\"year\");\r",
+              "    pm.expect(response.data).to.have.property(\"price\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Apple MacBook Pro 16 (Updated Name)\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/objects/ff8081819cd4022c019d05fc94744f70",
+          "host": [
+            "{{BaseURL}}"
+          ],
+          "path": [
+            "objects",
+            "ff8081819cd4022c019d05fc94744f70"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete an Object",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "let response = pm.response.json();\r",
+              "\r",
+              "//1. Validate Status Code is 200\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "//2. Validate response time is below 1000ms\r",
+              "pm.test(\"Response time is less than 1000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "// 3. Validate response body contains a confirmation message\r",
+              "pm.test(\"Response body contains a message confirming deletion\", function () {\r",
+              "    pm.expect(response).to.be.an(\"object\");\r",
+              "    pm.expect(response).to.have.property(\"message\");\r",
+              "    pm.expect(response.message).to.be.a(\"string\");\r",
+              "    pm.expect(response.message).to.not.be.empty;\r",
+              "});\r",
+              "\r",
+              "// 4. Validate that the deleted object ID is no longer accessible (chained verification)\r",
+              "pm.test(\"Verify object is deleted by sending a GET request\", function () {\r",
+              "    const baseUrl = pm.environment.get(\"BaseURL\");\r",
+              "    const objectId = \"ff8081819cd4022c019d05eb3b774f4c\";\r",
+              "\r",
+              "    pm.sendRequest({\r",
+              "        url: `${baseUrl}/objects/${objectId}`,\r",
+              "        method: \"GET\"\r",
+              "    }, function (err, res) {\r",
+              "        pm.expect(err).to.be.null;\r",
+              "        pm.expect(res.code).to.be.oneOf([404, 400]);\r",
+              "    });\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Apple MacBook Pro 17 (Updated Name)\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/objects/ff8081819cd4022c019d06a83c7c508a",
+          "host": [
+            "{{BaseURL}}"
+          ],
+          "path": [
+            "objects",
+            "ff8081819cd4022c019d06a83c7c508a"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
