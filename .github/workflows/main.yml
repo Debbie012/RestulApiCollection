@@ -31,6 +31,7 @@ jobs:
       - name: Run Postman Collection
         run: |
           newman run "MyRestulApiCollection.postman_collection.json" \
+          -e "RestFul API.postman_environment.json" \
           -r htmlextra,cli \
           --delay-request 60000 \
           --reporter-htmlextra-export reports/report.html \
