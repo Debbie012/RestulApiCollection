@@ -34,7 +34,7 @@ jobs:
           -e "RestFul API.postman_environment.json" \
           -r htmlextra,cli \
           --delay-request 60000 \
-          --reporter-htmlextra-export reports/report.html \
+          --reporter-htmlextra-export reports/report1.html \
           --verbose
         shell: bash
 
@@ -44,7 +44,7 @@ jobs:
           -e "jsonplaceholder.postman_environment.json" \
           -r htmlextra,cli \
           --delay-request 60000 \
-          --reporter-htmlextra-export reports/report.html \
+          --reporter-htmlextra-export reports/report2.html \
           --verbose
         shell: bash
 
