@@ -1,0 +1,349 @@
+{
+  "info": {
+    "_postman_id": "8b8ccde2-b6f9-487b-ae93-65c6853965f5",
+    "name": "jsonPlaceHolderAPI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33451219",
+    "_collection_link": "https://go.postman.co/collection/33451219-8b8ccde2-b6f9-487b-ae93-65c6853965f5?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Getting a Resource",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "let response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "// Validate response schema\r",
+              "pm.test(\"Response has correct schema\", function () {\r",
+              "    pm.expect(response).to.have.property(\"userId\").that.is.a(\"number\");\r",
+              "    pm.expect(response).to.have.property(\"id\").that.is.a(\"number\");\r",
+              "    pm.expect(response).to.have.property(\"title\").that.is.a(\"string\");\r",
+              "    pm.expect(response).to.have.property(\"body\").that.is.a(\"string\");\r",
+              "});\r",
+              "\r",
+              "// Validate the correct resource is returned\r",
+              "pm.test(\"Returned resource has id 1\", function () {\r",
+              "    pm.expect(response.id).to.eql(1);\r",
+              "});\r",
+              "\r",
+              "// Validate fields are not empty\r",
+              "pm.test(\"Title and body are not empty strings\", function () {\r",
+              "    pm.expect(response.title).to.not.be.empty;\r",
+              "    pm.expect(response.body).to.not.be.empty;\r",
+              "});\r",
+              "\r",
+              "// Validate userId is a positive number\r",
+              "pm.test(\"userId is a positive number\", function () {\r",
+              "    pm.expect(response.userId).to.be.above(0);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}posts/1",
+          "host": [
+            "{{baseURL}}posts"
+          ],
+          "path": [
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listing Resource",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "let response = pm.response.json();\r",
+              "\r",
+              "// Status code test\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "// Validate schema for all items\r",
+              "pm.test(\"All items have correct schema\", function () {\r",
+              "    response.forEach(function (item) {\r",
+              "        pm.expect(item).to.have.property(\"userId\").that.is.a(\"number\");\r",
+              "        pm.expect(item).to.have.property(\"id\").that.is.a(\"number\");\r",
+              "        pm.expect(item).to.have.property(\"title\").that.is.a(\"string\");\r",
+              "        pm.expect(item).to.have.property(\"body\").that.is.a(\"string\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "// Validate IDs are unique\r",
+              "pm.test(\"All item IDs are unique\", function () {\r",
+              "    const ids = response.map(function (item) { return item.id; });\r",
+              "    const uniqueIds = [...new Set(ids)];\r",
+              "    pm.expect(ids.length).to.eql(uniqueIds.length);\r",
+              "});\r",
+              "\r",
+              "// Validate userId values are positive numbers\r",
+              "pm.test(\"All userIds are positive numbers\", function () {\r",
+              "    response.forEach(function (item) {\r",
+              "        pm.expect(item.userId).to.be.above(0);\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "// Validate title and body are not empty strings\r",
+              "pm.test(\"All items have non-empty title and body\", function () {\r",
+              "    response.forEach(function (item) {\r",
+              "        pm.expect(item.title).to.not.be.empty;\r",
+              "        pm.expect(item.body).to.not.be.empty;\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}posts",
+          "host": [
+            "{{baseURL}}posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Creating a Resource",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "// Status code test\r",
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "// Validate response schema\r",
+              "pm.test(\"Response has correct schema\", function () {\r",
+              "    pm.expect(response).to.have.property(\"title\").that.is.a(\"string\");\r",
+              "    pm.expect(response).to.have.property(\"body\").that.is.a(\"string\");\r",
+              "    pm.expect(response).to.have.property(\"userId\").that.is.a(\"number\");\r",
+              "    pm.expect(response).to.have.property(\"id\").that.is.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "// Validate the created resource echoes back the sent data\r",
+              "pm.test(\"Response contains the submitted title\", function () {\r",
+              "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "    pm.expect(response.title).to.eql(requestBody.title);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains the submitted body\", function () {\r",
+              "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "    pm.expect(response.body).to.eql(requestBody.body);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains the submitted userId\", function () {\r",
+              "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "    pm.expect(response.userId).to.eql(requestBody.userId);\r",
+              "});\r",
+              "\r",
+              "// Validate an ID was assigned to the new resource\r",
+              "pm.test(\"New resource has an assigned id\", function () {\r",
+              "    pm.expect(response.id).to.be.a(\"number\");\r",
+              "    pm.expect(response.id).to.be.above(0);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Amazing Grace\",\r\n    \"body\": \"barr\",\r\n    \"userId\": 1\r\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/posts",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Updating a Resource",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "// Status code test\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "// Validate response schema\r",
+              "pm.test(\"Response has correct schema\", function () {\r",
+              "    pm.expect(response).to.have.property(\"id\").that.is.a(\"number\");\r",
+              "    pm.expect(response).to.have.property(\"title\").that.is.a(\"string\");\r",
+              "    pm.expect(response).to.have.property(\"body\").that.is.a(\"string\");\r",
+              "    pm.expect(response).to.have.property(\"userId\").that.is.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "// Validate the updated resource echoes back the sent data\r",
+              "pm.test(\"Response contains the submitted title\", function () {\r",
+              "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "    pm.expect(response.title).to.eql(requestBody.title);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains the submitted body\", function () {\r",
+              "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "    pm.expect(response.body).to.eql(requestBody.body);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains the submitted userId\", function () {\r",
+              "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "    pm.expect(response.userId).to.eql(requestBody.userId);\r",
+              "});\r",
+              "\r",
+              "// Validate the correct resource was updated\r",
+              "pm.test(\"Returned resource has the correct id\", function () {\r",
+              "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "    pm.expect(response.id).to.eql(requestBody.id);\r",
+              "});\r",
+              "\r",
+              "// Validate id is a positive number\r",
+              "pm.test(\"Resource id is a positive number\", function () {\r",
+              "    pm.expect(response.id).to.be.above(0);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"foo\",\r\n    \"body\": \"bar\",\r\n    \"userId\": 1\r\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}posts/1",
+          "host": [
+            "{{baseURL}}posts"
+          ],
+          "path": [
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Deleting a Resource",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse response body\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "// Status code test\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "// Validate successful deletion\r",
+              "pm.test(\"Delete operation was successful\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "    pm.response.to.be.ok;\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Amazing Grace\"\r\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/posts/101",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "posts",
+            "101"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "objectID",
+      "value": ""
+    }
+  ]
+}
