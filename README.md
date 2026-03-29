@@ -2,7 +2,7 @@
 
 
 
-This repository contains a Postman collection for testing RESTful APIs.
+This repository contains Postman collections for testing RESTful APIs and jsonPlaceHolder APIs
 
 
 
@@ -16,11 +16,9 @@ This repository contains a Postman collection for testing RESTful APIs.
 
 \- Postman
 
-\- Newman 
+\- Newman
 
 
 
-\## Author
 
-Debbie Ntigeli
 
